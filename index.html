@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Learning Hub - Master Your AI Journey</title>
+    <meta name="description" content="A comprehensive AI learning platform with curated books, progress tracking, and structured learning paths">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-brand">
+                <i class="fas fa-brain"></i>
+                <span>AI Learning Hub</span>
+            </div>
+            <div class="nav-menu">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#library" class="nav-link">Library</a>
+                <a href="#learning-paths" class="nav-link">Learning Paths</a>
+                <a href="#progress" class="nav-link">Progress</a>
+                <a href="#notes" class="nav-link">Notes</a>
+            </div>
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">Master Your AI Journey</h1>
+                <p class="hero-subtitle">Comprehensive learning platform with curated AI books, progress tracking, and structured learning paths</p>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">15</span>
+                        <span class="stat-label">AI Books</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">5</span>
+                        <span class="stat-label">Learning Paths</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">∞</span>
+                        <span class="stat-label">Knowledge</span>
+                    </div>
+                </div>
+                <button class="btn btn-primary">Start Learning</button>
+            </div>
+            <div class="hero-visual">
+                <div class="floating-cards">
+                    <div class="card">Machine Learning</div>
+                    <div class="card">Deep Learning</div>
+                    <div class="card">Computer Vision</div>
+                    <div class="card">NLP</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Library Section -->
+        <section id="library" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">AI Book Library</h2>
+                    <p class="section-subtitle">Curated collection of essential AI and machine learning resources</p>
+                </div>
+
+                <!-- Search and Filter -->
+                <div class="search-filter">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search books..." id="searchInput">
+                    </div>
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-category="all">All Books</button>
+                        <button class="filter-btn" data-category="core-ai">Core AI</button>
+                        <button class="filter-btn" data-category="deep-learning">Deep Learning</button>
+                        <button class="filter-btn" data-category="mathematics">Mathematics</button>
+                        <button class="filter-btn" data-category="applications">Applications</button>
+                    </div>
+                </div>
+
+                <!-- Books Grid -->
+                <div class="books-grid" id="booksGrid">
+                    <!-- Books will be dynamically loaded here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Learning Paths Section -->
+        <section id="learning-paths" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Learning Paths</h2>
+                    <p class="section-subtitle">Structured learning journeys for different AI domains</p>
+                </div>
+
+                <div class="paths-grid">
+                    <div class="path-card">
+                        <div class="path-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <h3 class="path-title">Machine Learning Fundamentals</h3>
+                        <p class="path-description">Start your AI journey with core ML concepts</p>
+                        <div class="path-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                            <span class="progress-text">0% Complete</span>
+                        </div>
+                        <button class="btn btn-outline">Start Path</button>
+                    </div>
+
+                    <div class="path-card">
+                        <div class="path-icon">
+                            <i class="fas fa-layer-group"></i>
+                        </div>
+                        <h3 class="path-title">Deep Learning Mastery</h3>
+                        <p class="path-description">Master neural networks and deep architectures</p>
+                        <div class="path-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                            <span class="progress-text">0% Complete</span>
+                        </div>
+                        <button class="btn btn-outline">Start Path</button>
+                    </div>
+
+                    <div class="path-card">
+                        <div class="path-icon">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <h3 class="path-title">Computer Vision</h3>
+                        <p class="path-description">Learn to see and understand images</p>
+                        <div class="path-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                            <span class="progress-text">0% Complete</span>
+                        </div>
+                        <button class="btn btn-outline">Start Path</button>
+                    </div>
+
+                    <div class="path-card">
+                        <div class="path-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <h3 class="path-title">Natural Language Processing</h3>
+                        <p class="path-description">Understand and generate human language</p>
+                        <div class="path-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                            <span class="progress-text">0% Complete</span>
+                        </div>
+                        <button class="btn btn-outline">Start Path</button>
+                    </div>
+
+                    <div class="path-card">
+                        <div class="path-icon">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <h3 class="path-title">Mathematics for AI</h3>
+                        <p class="path-description">Build strong mathematical foundations</p>
+                        <div class="path-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                            <span class="progress-text">0% Complete</span>
+                        </div>
+                        <button class="btn btn-outline">Start Path</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Progress Section -->
+        <section id="progress" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Your Progress</h2>
+                    <p class="section-subtitle">Track your learning journey and achievements</p>
+                </div>
+
+                <div class="progress-dashboard">
+                    <div class="progress-stats">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-book-open"></i>
+                            </div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="booksRead">0</span>
+                                <span class="stat-label">Books Read</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="hoursSpent">0</span>
+                                <span class="stat-label">Hours Spent</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="achievements">0</span>
+                                <span class="stat-label">Achievements</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-bullseye"></i>
+                            </div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="completionRate">0%</span>
+                                <span class="stat-label">Completion Rate</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="progress-chart">
+                        <div class="chart-placeholder">
+                            <i class="fas fa-chart-line"></i>
+                            <p>Progress visualization will be displayed here</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Notes Section -->
+        <section id="notes" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">My Notes</h2>
+                    <p class="section-subtitle">Keep track of your insights and key takeaways</p>
+                </div>
+
+                <div class="notes-container">
+                    <div class="notes-sidebar">
+                        <div class="notes-header">
+                            <h3>All Notes</h3>
+                            <button class="btn btn-primary btn-sm" id="newNoteBtn">
+                                <i class="fas fa-plus"></i> New Note
+                            </button>
+                        </div>
+                        <div class="notes-list" id="notesList">
+                            <p class="no-notes">No notes yet. Start reading to add notes!</p>
+                        </div>
+                    </div>
+
+                    <div class="notes-editor">
+                        <div class="note-header">
+                            <input type="text" placeholder="Note title..." id="noteTitle">
+                            <div class="note-actions">
+                                <button class="btn btn-outline btn-sm" id="saveNoteBtn">Save</button>
+                                <button class="btn btn-outline btn-sm" id="deleteNoteBtn">Delete</button>
+                            </div>
+                        </div>
+                        <div class="note-meta">
+                            <span id="noteBook">No book selected</span>
+                            <span id="noteDate">Today</span>
+                        </div>
+                        <textarea placeholder="Write your notes here..." id="noteContent"></textarea>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <i class="fas fa-brain"></i>
+                    <span>AI Learning Hub</span>
+                </div>
+                <div class="footer-links">
+                    <a href="#home">Home</a>
+                    <a href="#library">Library</a>
+                    <a href="#learning-paths">Learning Paths</a>
+                    <a href="#progress">Progress</a>
+                    <a href="#notes">Notes</a>
+                </div>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 AI Learning Hub. Built for continuous learning.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
