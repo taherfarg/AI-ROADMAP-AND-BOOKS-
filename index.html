@@ -3,315 +3,722 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Learning Hub - Master Your AI Journey</title>
-    <meta name="description" content="A comprehensive AI learning platform with curated books, progress tracking, and structured learning paths">
+    <title>AI Learning Hub - Professional AI Education Platform</title>
+    <meta name="description" content="Professional AI learning platform with curated books, progress tracking, and personalized study plans">
+    <meta name="keywords" content="AI, Machine Learning, Deep Learning, Education, Books, Progress Tracking">
     <link rel="stylesheet" href="styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <nav class="nav">
+    <nav class="nav">
+        <div class="nav-container">
             <div class="nav-brand">
                 <i class="fas fa-brain"></i>
                 <span>AI Learning Hub</span>
             </div>
-            <div class="nav-menu">
+            <div class="nav-links">
                 <a href="#home" class="nav-link active">Home</a>
-                <a href="#library" class="nav-link">Library</a>
-                <a href="#learning-paths" class="nav-link">Learning Paths</a>
-                <a href="#progress" class="nav-link">Progress</a>
-                <a href="#notes" class="nav-link">Notes</a>
+                <a href="#roadmap" class="nav-link">AI Roadmap</a>
+                <a href="#books" class="nav-link">Library</a>
+                <a href="#planner" class="nav-link">Planner</a>
+                <a href="#progress" class="nav-link">Analytics</a>
+                <a href="#resources" class="nav-link">Resources</a>
             </div>
-            <div class="nav-toggle">
-                <span></span>
-                <span></span>
-                <span></span>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <div class="user-profile">
+                    <div class="avatar">TF</div>
+                </div>
             </div>
-        </nav>
-    </header>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
 
-    <!-- Main Content -->
-    <main class="main">
-        <!-- Hero Section -->
+    <main>
         <section id="home" class="hero">
-            <div class="hero-content">
-                <h1 class="hero-title">Master Your AI Journey</h1>
-                <p class="hero-subtitle">Comprehensive learning platform with curated AI books, progress tracking, and structured learning paths</p>
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-badge">
+                        <i class="fas fa-star"></i>
+                        <span>Professional AI Education Platform</span>
+                    </div>
+                    <h1>Master AI & Machine Learning</h1>
+                    <p>Transform your career with our comprehensive AI learning ecosystem. Track progress, follow structured roadmaps, and access premium resources.</p>
+                    <div class="hero-actions">
+                        <button class="btn btn-primary" onclick="scrollToSection('books')">
+                            <i class="fas fa-rocket"></i>
+                            Start Learning
+                        </button>
+                        <button class="btn btn-secondary" onclick="scrollToSection('planner')">
+                            <i class="fas fa-map"></i>
+                            View Roadmap
+                        </button>
+                    </div>
+                </div>
                 <div class="hero-stats">
                     <div class="stat">
-                        <span class="stat-number">15</span>
-                        <span class="stat-label">AI Books</span>
+                        <div class="stat-icon"><i class="fas fa-book"></i></div>
+                        <span class="stat-number" data-count="15">0</span>
+                        <span class="stat-label">Expert Books</span>
                     </div>
                     <div class="stat">
-                        <span class="stat-number">5</span>
-                        <span class="stat-label">Learning Paths</span>
+                        <div class="stat-icon"><i class="fas fa-calendar"></i></div>
+                        <span class="stat-number" data-count="12">0</span>
+                        <span class="stat-label">Month Program</span>
                     </div>
                     <div class="stat">
-                        <span class="stat-number">∞</span>
-                        <span class="stat-label">Knowledge</span>
+                        <div class="stat-icon"><i class="fas fa-users"></i></div>
+                        <span class="stat-number" data-count="1000">0</span>
+                        <span class="stat-label">Learners</span>
                     </div>
-                </div>
-                <button class="btn btn-primary">Start Learning</button>
-            </div>
-            <div class="hero-visual">
-                <div class="floating-cards">
-                    <div class="card">Machine Learning</div>
-                    <div class="card">Deep Learning</div>
-                    <div class="card">Computer Vision</div>
-                    <div class="card">NLP</div>
+                    <div class="stat">
+                        <div class="stat-icon"><i class="fas fa-trophy"></i></div>
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">Success Rate</span>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Library Section -->
-        <section id="library" class="section">
+        <section id="roadmap" class="section bg-light">
             <div class="container">
                 <div class="section-header">
-                    <h2 class="section-title">AI Book Library</h2>
-                    <p class="section-subtitle">Curated collection of essential AI and machine learning resources</p>
-                </div>
-
-                <!-- Search and Filter -->
-                <div class="search-filter">
-                    <div class="search-box">
-                        <i class="fas fa-search"></i>
-                        <input type="text" placeholder="Search books..." id="searchInput">
-                    </div>
-                    <div class="filter-buttons">
-                        <button class="filter-btn active" data-category="all">All Books</button>
-                        <button class="filter-btn" data-category="core-ai">Core AI</button>
-                        <button class="filter-btn" data-category="deep-learning">Deep Learning</button>
-                        <button class="filter-btn" data-category="mathematics">Mathematics</button>
-                        <button class="filter-btn" data-category="applications">Applications</button>
+                    <div class="section-title">
+                        <h2>🚀 Middle East AI Career Roadmap</h2>
+                        <p>Comprehensive guide for AI professionals in the Middle East region</p>
                     </div>
                 </div>
-
-                <!-- Books Grid -->
-                <div class="books-grid" id="booksGrid">
-                    <!-- Books will be dynamically loaded here -->
+                
+                <div class="career-paths">
+                    <h3>🎯 Career Paths</h3>
+                    <div class="career-grid">
+                        <div class="career-card">
+                            <div class="career-icon"><i class="fas fa-chart-line"></i></div>
+                            <h4>Data Scientist</h4>
+                            <div class="career-timeline">12-18 months</div>
+                            <div class="career-skills">
+                                <span class="skill-tag">Python/R</span>
+                                <span class="skill-tag">Machine Learning</span>
+                                <span class="skill-tag">Data Visualization</span>
+                            </div>
+                            <div class="salary-info">
+                                <div class="salary-item">UAE: AED 180K - 350K</div>
+                                <div class="salary-item">Saudi: SAR 150K - 300K</div>
+                            </div>
+                        </div>
+                        
+                        <div class="career-card">
+                            <div class="career-icon"><i class="fas fa-cogs"></i></div>
+                            <h4>ML Engineer</h4>
+                            <div class="career-timeline">15-24 months</div>
+                            <div class="career-skills">
+                                <span class="skill-tag">MLOps</span>
+                                <span class="skill-tag">Cloud Platforms</span>
+                                <span class="skill-tag">Deep Learning</span>
+                            </div>
+                            <div class="salary-info">
+                                <div class="salary-item">UAE: AED 200K - 400K</div>
+                                <div class="salary-item">Saudi: SAR 180K - 350K</div>
+                            </div>
+                        </div>
+                        
+                        <div class="career-card">
+                            <div class="career-icon"><i class="fas fa-brain"></i></div>
+                            <h4>AI Research Scientist</h4>
+                            <div class="career-timeline">24-36 months</div>
+                            <div class="career-skills">
+                                <span class="skill-tag">Deep Learning</span>
+                                <span class="skill-tag">Research</span>
+                                <span class="skill-tag">Publications</span>
+                            </div>
+                            <div class="salary-info">
+                                <div class="salary-item">UAE: AED 250K - 500K</div>
+                                <div class="salary-item">Saudi: SAR 200K - 450K</div>
+                            </div>
+                        </div>
+                        
+                        <div class="career-card">
+                            <div class="career-icon"><i class="fas fa-database"></i></div>
+                            <h4>Data Engineer</h4>
+                            <div class="career-timeline">12-18 months</div>
+                            <div class="career-skills">
+                                <span class="skill-tag">ETL</span>
+                                <span class="skill-tag">Big Data</span>
+                                <span class="skill-tag">Cloud Architecture</span>
+                            </div>
+                            <div class="salary-info">
+                                <div class="salary-item">UAE: AED 160K - 320K</div>
+                                <div class="salary-item">Saudi: SAR 140K - 280K</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="learning-phases">
+                    <h3>🛠️ Learning Roadmap</h3>
+                    <div class="phases-timeline">
+                        <div class="phase-item">
+                            <div class="phase-number">1</div>
+                            <div class="phase-content">
+                                <h4>Foundation Phase</h4>
+                                <div class="phase-duration">3-4 months</div>
+                                <div class="phase-topics">
+                                    <div class="topic-group">
+                                        <h5>Mathematics & Statistics</h5>
+                                        <ul>
+                                            <li>Linear Algebra</li>
+                                            <li>Calculus</li>
+                                            <li>Probability & Statistics</li>
+                                            <li>Discrete Mathematics</li>
+                                        </ul>
+                                    </div>
+                                    <div class="topic-group">
+                                        <h5>Programming Fundamentals</h5>
+                                        <ul>
+                                            <li>Python Programming</li>
+                                            <li>SQL Databases</li>
+                                            <li>Git Version Control</li>
+                                            <li>Command Line Interface</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="phase-item">
+                            <div class="phase-number">2</div>
+                            <div class="phase-content">
+                                <h4>Core Data Science</h4>
+                                <div class="phase-duration">4-6 months</div>
+                                <div class="phase-topics">
+                                    <div class="topic-group">
+                                        <h5>Data Analysis & Visualization</h5>
+                                        <ul>
+                                            <li>Pandas & NumPy</li>
+                                            <li>Matplotlib & Seaborn</li>
+                                            <li>Plotly & Dash</li>
+                                            <li>Jupyter Notebooks</li>
+                                        </ul>
+                                    </div>
+                                    <div class="topic-group">
+                                        <h5>Machine Learning</h5>
+                                        <ul>
+                                            <li>Supervised Learning</li>
+                                            <li>Unsupervised Learning</li>
+                                            <li>Model Evaluation</li>
+                                            <li>Feature Engineering</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="phase-item">
+                            <div class="phase-number">3</div>
+                            <div class="phase-content">
+                                <h4>Specialization</h4>
+                                <div class="phase-duration">6-8 months</div>
+                                <div class="specialization-tracks">
+                                    <div class="track">
+                                        <h5>Deep Learning Track</h5>
+                                        <div class="track-skills">
+                                            <span class="skill-tag">Neural Networks</span>
+                                            <span class="skill-tag">TensorFlow/PyTorch</span>
+                                            <span class="skill-tag">Computer Vision</span>
+                                            <span class="skill-tag">NLP</span>
+                                        </div>
+                                    </div>
+                                    <div class="track">
+                                        <h5>MLOps Track</h5>
+                                        <div class="track-skills">
+                                            <span class="skill-tag">Docker</span>
+                                            <span class="skill-tag">Kubernetes</span>
+                                            <span class="skill-tag">AWS/Azure/GCP</span>
+                                            <span class="skill-tag">CI/CD</span>
+                                        </div>
+                                    </div>
+                                    <div class="track">
+                                        <h5>Big Data Track</h5>
+                                        <div class="track-skills">
+                                            <span class="skill-tag">Apache Spark</span>
+                                            <span class="skill-tag">Hadoop</span>
+                                            <span class="skill-tag">Data Warehousing</span>
+                                            <span class="skill-tag">Stream Processing</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="phase-item">
+                            <div class="phase-number">4</div>
+                            <div class="phase-content">
+                                <h4>Industry Application</h4>
+                                <div class="phase-duration">3-4 months</div>
+                                <div class="application-items">
+                                    <div class="app-item">
+                                        <i class="fas fa-project-diagram"></i>
+                                        <span>Portfolio Projects</span>
+                                    </div>
+                                    <div class="app-item">
+                                        <i class="fas fa-code-branch"></i>
+                                        <span>Open Source Contributions</span>
+                                    </div>
+                                    <div class="app-item">
+                                        <i class="fas fa-building"></i>
+                                        <span>Industry Internships</span>
+                                    </div>
+                                    <div class="app-item">
+                                        <i class="fas fa-users"></i>
+                                        <span>Networking Events</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="regional-opportunities">
+                    <h3>🌍 Regional Opportunities</h3>
+                    <div class="regions-grid">
+                        <div class="region-card">
+                            <div class="region-header">
+                                <h4>🇦🇪 United Arab Emirates</h4>
+                                <div class="cities">Dubai, Abu Dhabi</div>
+                            </div>
+                            <div class="companies">
+                                <h5>Major Companies:</h5>
+                                <div class="company-tags">
+                                    <span class="company-tag">Emirates NBD</span>
+                                    <span class="company-tag">Etisalat</span>
+                                    <span class="company-tag">ADNOC</span>
+                                    <span class="company-tag">Careem</span>
+                                    <span class="company-tag">Noon</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="region-card">
+                            <div class="region-header">
+                                <h4>🇸🇦 Saudi Arabia</h4>
+                                <div class="cities">Riyadh, Jeddah, Khobar</div>
+                            </div>
+                            <div class="companies">
+                                <h5>Major Companies:</h5>
+                                <div class="company-tags">
+                                    <span class="company-tag">Saudi Aramco</span>
+                                    <span class="company-tag">STC</span>
+                                    <span class="company-tag">SABIC</span>
+                                    <span class="company-tag">Noon</span>
+                                    <span class="company-tag">Jarir</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="region-card">
+                            <div class="region-header">
+                                <h4>🇶🇦 Qatar</h4>
+                                <div class="cities">Doha</div>
+                            </div>
+                            <div class="companies">
+                                <h5>Major Companies:</h5>
+                                <div class="company-tags">
+                                    <span class="company-tag">Qatar Airways</span>
+                                    <span class="company-tag">Ooredoo</span>
+                                    <span class="company-tag">QNB</span>
+                                    <span class="company-tag">Hamad Medical</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Learning Paths Section -->
-        <section id="learning-paths" class="section">
+        <section id="books" class="section">
             <div class="container">
                 <div class="section-header">
-                    <h2 class="section-title">Learning Paths</h2>
-                    <p class="section-subtitle">Structured learning journeys for different AI domains</p>
+                    <div class="section-title">
+                        <h2>AI Library</h2>
+                        <p>Curated collection of premium AI and ML resources</p>
+                    </div>
+                    <div class="section-actions">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="bookSearch" placeholder="Search books...">
+                        </div>
+                        <div class="view-toggle">
+                            <button class="view-btn active" data-view="grid"><i class="fas fa-th"></i></button>
+                            <button class="view-btn" data-view="list"><i class="fas fa-list"></i></button>
+                        </div>
+                    </div>
                 </div>
+                <div class="book-filters">
+                    <button class="filter-btn active" data-filter="all">All Books</button>
+                    <button class="filter-btn" data-filter="beginner">Beginner</button>
+                    <button class="filter-btn" data-filter="intermediate">Intermediate</button>
+                    <button class="filter-btn" data-filter="advanced">Advanced</button>
+                    <button class="filter-btn" data-filter="favorites">Favorites</button>
+                </div>
+                <div class="books-container">
+                    <div class="books-grid" id="booksGrid"></div>
+                </div>
+            </div>
+        </section>
 
-                <div class="paths-grid">
-                    <div class="path-card">
-                        <div class="path-icon">
-                            <i class="fas fa-robot"></i>
-                        </div>
-                        <h3 class="path-title">Machine Learning Fundamentals</h3>
-                        <p class="path-description">Start your AI journey with core ML concepts</p>
-                        <div class="path-progress">
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 0%"></div>
-                            </div>
-                            <span class="progress-text">0% Complete</span>
-                        </div>
-                        <button class="btn btn-outline">Start Path</button>
+        <section id="planner" class="section bg-light">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-title">
+                        <h2>Learning Planner</h2>
+                        <p>Structured roadmap with personalized study plans</p>
                     </div>
-
-                    <div class="path-card">
-                        <div class="path-icon">
-                            <i class="fas fa-layer-group"></i>
-                        </div>
-                        <h3 class="path-title">Deep Learning Mastery</h3>
-                        <p class="path-description">Master neural networks and deep architectures</p>
-                        <div class="path-progress">
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 0%"></div>
-                            </div>
-                            <span class="progress-text">0% Complete</span>
-                        </div>
-                        <button class="btn btn-outline">Start Path</button>
+                    <div class="planner-controls">
+                        <select id="studyMode" class="select-input">
+                            <option value="standard">Standard Track</option>
+                            <option value="intensive">Intensive Track</option>
+                            <option value="weekend">Weekend Track</option>
+                        </select>
                     </div>
-
-                    <div class="path-card">
-                        <div class="path-icon">
-                            <i class="fas fa-eye"></i>
-                        </div>
-                        <h3 class="path-title">Computer Vision</h3>
-                        <p class="path-description">Learn to see and understand images</p>
-                        <div class="path-progress">
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 0%"></div>
+                </div>
+                <div class="planner-content">
+                    <div class="roadmap-container">
+                        <div class="roadmap">
+                            <div class="roadmap-item">
+                                <div class="roadmap-step completed">
+                                    <i class="fas fa-play"></i>
+                                    <span class="step-number">1</span>
+                                </div>
+                                <div class="roadmap-content">
+                                    <div class="phase-header">
+                                        <h3>Foundation Phase</h3>
+                                        <span class="phase-duration">Months 1-3</span>
+                                    </div>
+                                    <p>Mathematics, Statistics, Python Programming</p>
+                                    <div class="phase-skills">
+                                        <span class="skill-tag">Linear Algebra</span>
+                                        <span class="skill-tag">Statistics</span>
+                                        <span class="skill-tag">Python</span>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" data-progress="0"></div>
+                                        <span class="progress-text">0%</span>
+                                    </div>
+                                </div>
                             </div>
-                            <span class="progress-text">0% Complete</span>
+                            <div class="roadmap-item">
+                                <div class="roadmap-step">
+                                    <i class="fas fa-cogs"></i>
+                                    <span class="step-number">2</span>
+                                </div>
+                                <div class="roadmap-content">
+                                    <div class="phase-header">
+                                        <h3>Machine Learning</h3>
+                                        <span class="phase-duration">Months 4-6</span>
+                                    </div>
+                                    <p>Core ML algorithms and techniques</p>
+                                    <div class="phase-skills">
+                                        <span class="skill-tag">Supervised Learning</span>
+                                        <span class="skill-tag">Feature Engineering</span>
+                                        <span class="skill-tag">Model Evaluation</span>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" data-progress="0"></div>
+                                        <span class="progress-text">0%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="roadmap-item">
+                                <div class="roadmap-step">
+                                    <i class="fas fa-brain"></i>
+                                    <span class="step-number">3</span>
+                                </div>
+                                <div class="roadmap-content">
+                                    <div class="phase-header">
+                                        <h3>Deep Learning</h3>
+                                        <span class="phase-duration">Months 7-9</span>
+                                    </div>
+                                    <p>Neural networks and advanced architectures</p>
+                                    <div class="phase-skills">
+                                        <span class="skill-tag">Neural Networks</span>
+                                        <span class="skill-tag">CNNs</span>
+                                        <span class="skill-tag">RNNs</span>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" data-progress="0"></div>
+                                        <span class="progress-text">0%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="roadmap-item">
+                                <div class="roadmap-step">
+                                    <i class="fas fa-rocket"></i>
+                                    <span class="step-number">4</span>
+                                </div>
+                                <div class="roadmap-content">
+                                    <div class="phase-header">
+                                        <h3>Specialization</h3>
+                                        <span class="phase-duration">Months 10-12</span>
+                                    </div>
+                                    <p>Choose your AI specialization path</p>
+                                    <div class="phase-skills">
+                                        <span class="skill-tag">Computer Vision</span>
+                                        <span class="skill-tag">NLP</span>
+                                        <span class="skill-tag">MLOps</span>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" data-progress="0"></div>
+                                        <span class="progress-text">0%</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <button class="btn btn-outline">Start Path</button>
                     </div>
-
-                    <div class="path-card">
-                        <div class="path-icon">
-                            <i class="fas fa-comments"></i>
-                        </div>
-                        <h3 class="path-title">Natural Language Processing</h3>
-                        <p class="path-description">Understand and generate human language</p>
-                        <div class="path-progress">
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 0%"></div>
+                    <div class="planner-sidebar">
+                        <div class="todo-section">
+                            <div class="todo-header">
+                                <h3>Study Tasks</h3>
+                                <div class="todo-stats">
+                                    <span id="todoCount">0 tasks</span>
+                                </div>
                             </div>
-                            <span class="progress-text">0% Complete</span>
-                        </div>
-                        <button class="btn btn-outline">Start Path</button>
-                    </div>
-
-                    <div class="path-card">
-                        <div class="path-icon">
-                            <i class="fas fa-calculator"></i>
-                        </div>
-                        <h3 class="path-title">Mathematics for AI</h3>
-                        <p class="path-description">Build strong mathematical foundations</p>
-                        <div class="path-progress">
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 0%"></div>
+                            <div class="todo-input">
+                                <input type="text" id="todoInput" placeholder="Add a learning task...">
+                                <button id="addTodo"><i class="fas fa-plus"></i></button>
                             </div>
-                            <span class="progress-text">0% Complete</span>
+                            <ul class="todo-list" id="todoList"></ul>
                         </div>
-                        <button class="btn btn-outline">Start Path</button>
+                        <div class="study-timer">
+                            <h3>Study Timer</h3>
+                            <div class="timer-display">
+                                <span id="timerDisplay">25:00</span>
+                            </div>
+                            <div class="timer-controls">
+                                <button id="startTimer" class="btn btn-primary">Start</button>
+                                <button id="pauseTimer" class="btn btn-secondary">Pause</button>
+                                <button id="resetTimer" class="btn btn-outline">Reset</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Progress Section -->
         <section id="progress" class="section">
             <div class="container">
                 <div class="section-header">
-                    <h2 class="section-title">Your Progress</h2>
-                    <p class="section-subtitle">Track your learning journey and achievements</p>
+                    <div class="section-title">
+                        <h2>Learning Analytics</h2>
+                        <p>Track your progress and achievements</p>
+                    </div>
+                    <div class="analytics-period">
+                        <select id="analyticsPeriod" class="select-input">
+                            <option value="week">This Week</option>
+                            <option value="month">This Month</option>
+                            <option value="year">This Year</option>
+                            <option value="all">All Time</option>
+                        </select>
+                    </div>
                 </div>
-
-                <div class="progress-dashboard">
-                    <div class="progress-stats">
-                        <div class="stat-card">
-                            <div class="stat-icon">
-                                <i class="fas fa-book-open"></i>
-                            </div>
-                            <div class="stat-info">
-                                <span class="stat-value" id="booksRead">0</span>
-                                <span class="stat-label">Books Read</span>
-                            </div>
+                <div class="analytics-grid">
+                    <div class="analytics-card primary">
+                        <div class="card-header">
+                            <h3>Books Completed</h3>
+                            <i class="fas fa-book-open"></i>
                         </div>
-
-                        <div class="stat-card">
-                            <div class="stat-icon">
-                                <i class="fas fa-clock"></i>
-                            </div>
-                            <div class="stat-info">
-                                <span class="stat-value" id="hoursSpent">0</span>
-                                <span class="stat-label">Hours Spent</span>
-                            </div>
+                        <div class="card-content">
+                            <div class="metric-value">0<span class="metric-total">/15</span></div>
+                            <div class="metric-change positive">+0 this week</div>
                         </div>
-
-                        <div class="stat-card">
-                            <div class="stat-icon">
-                                <i class="fas fa-trophy"></i>
-                            </div>
-                            <div class="stat-info">
-                                <span class="stat-value" id="achievements">0</span>
-                                <span class="stat-label">Achievements</span>
-                            </div>
-                        </div>
-
-                        <div class="stat-card">
-                            <div class="stat-icon">
-                                <i class="fas fa-bullseye"></i>
-                            </div>
-                            <div class="stat-info">
-                                <span class="stat-value" id="completionRate">0%</span>
-                                <span class="stat-label">Completion Rate</span>
-                            </div>
+                        <div class="progress-ring">
+                            <svg class="progress-ring-svg" width="60" height="60">
+                                <circle class="progress-ring-circle-bg" cx="30" cy="30" r="25"></circle>
+                                <circle class="progress-ring-circle" cx="30" cy="30" r="25" data-progress="0"></circle>
+                            </svg>
                         </div>
                     </div>
-
-                    <div class="progress-chart">
-                        <div class="chart-placeholder">
+                    <div class="analytics-card">
+                        <div class="card-header">
+                            <h3>Study Streak</h3>
+                            <i class="fas fa-fire"></i>
+                        </div>
+                        <div class="card-content">
+                            <div class="metric-value">0<span class="metric-unit">days</span></div>
+                            <div class="metric-change neutral">Keep it up!</div>
+                        </div>
+                    </div>
+                    <div class="analytics-card">
+                        <div class="card-header">
+                            <h3>Study Hours</h3>
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="card-content">
+                            <div class="metric-value">0<span class="metric-unit">h</span></div>
+                            <div class="metric-change positive">+0h this week</div>
+                        </div>
+                    </div>
+                    <div class="analytics-card">
+                        <div class="card-header">
+                            <h3>Completion Rate</h3>
                             <i class="fas fa-chart-line"></i>
-                            <p>Progress visualization will be displayed here</p>
+                        </div>
+                        <div class="card-content">
+                            <div class="metric-value">0<span class="metric-unit">%</span></div>
+                            <div class="metric-change neutral">Start learning!</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="progress-charts">
+                    <div class="chart-container">
+                        <h3>Weekly Progress</h3>
+                        <canvas id="progressChart" width="400" height="200"></canvas>
+                    </div>
+                    <div class="achievements">
+                        <h3>Achievements</h3>
+                        <div class="achievement-list" id="achievementList">
+                            <div class="achievement locked">
+                                <i class="fas fa-medal"></i>
+                                <div class="achievement-info">
+                                    <h4>First Book</h4>
+                                    <p>Complete your first book</p>
+                                </div>
+                            </div>
+                            <div class="achievement locked">
+                                <i class="fas fa-fire"></i>
+                                <div class="achievement-info">
+                                    <h4>Week Streak</h4>
+                                    <p>Study for 7 consecutive days</p>
+                                </div>
+                            </div>
+                            <div class="achievement locked">
+                                <i class="fas fa-trophy"></i>
+                                <div class="achievement-info">
+                                    <h4>AI Expert</h4>
+                                    <p>Complete all foundation books</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Notes Section -->
-        <section id="notes" class="section">
+        <section id="resources" class="section bg-light">
             <div class="container">
                 <div class="section-header">
-                    <h2 class="section-title">My Notes</h2>
-                    <p class="section-subtitle">Keep track of your insights and key takeaways</p>
-                </div>
-
-                <div class="notes-container">
-                    <div class="notes-sidebar">
-                        <div class="notes-header">
-                            <h3>All Notes</h3>
-                            <button class="btn btn-primary btn-sm" id="newNoteBtn">
-                                <i class="fas fa-plus"></i> New Note
-                            </button>
-                        </div>
-                        <div class="notes-list" id="notesList">
-                            <p class="no-notes">No notes yet. Start reading to add notes!</p>
-                        </div>
+                    <div class="section-title">
+                        <h2>Additional Resources</h2>
+                        <p>Enhance your learning with these premium resources</p>
                     </div>
-
-                    <div class="notes-editor">
-                        <div class="note-header">
-                            <input type="text" placeholder="Note title..." id="noteTitle">
-                            <div class="note-actions">
-                                <button class="btn btn-outline btn-sm" id="saveNoteBtn">Save</button>
-                                <button class="btn btn-outline btn-sm" id="deleteNoteBtn">Delete</button>
-                            </div>
+                </div>
+                <div class="resources-grid">
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-file-pdf"></i>
                         </div>
-                        <div class="note-meta">
-                            <span id="noteBook">No book selected</span>
-                            <span id="noteDate">Today</span>
+                        <h3>AI Engineer Resume</h3>
+                        <p>Professional resume template for AI engineers</p>
+                        <a href="Enhanced AI Engineer Resume - Taher Farg Ibrahim.pdf" class="btn btn-outline" target="_blank">
+                            <i class="fas fa-download"></i> Download
+                        </a>
+                    </div>
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-map-marked-alt"></i>
                         </div>
-                        <textarea placeholder="Write your notes here..." id="noteContent"></textarea>
+                        <h3>Career Roadmap</h3>
+                        <p>Comprehensive Middle East AI career guide</p>
+                        <a href="Enhanced Middle East AI Career Roadmap 2025 - With Advanced AI Technologies.pdf" class="btn btn-outline" target="_blank">
+                            <i class="fas fa-eye"></i> View
+                        </a>
+                    </div>
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h3>Practice Projects</h3>
+                        <p>Hands-on projects to build your portfolio</p>
+                        <button class="btn btn-outline" onclick="showComingSoon()">
+                            <i class="fas fa-rocket"></i> Coming Soon
+                        </button>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-brand">
-                    <i class="fas fa-brain"></i>
-                    <span>AI Learning Hub</span>
+                <div class="footer-section">
+                    <div class="footer-brand">
+                        <i class="fas fa-brain"></i>
+                        <span>AI Learning Hub</span>
+                    </div>
+                    <p>Professional AI education platform designed for continuous learning and career growth.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    </div>
                 </div>
-                <div class="footer-links">
-                    <a href="#home">Home</a>
-                    <a href="#library">Library</a>
-                    <a href="#learning-paths">Learning Paths</a>
-                    <a href="#progress">Progress</a>
-                    <a href="#notes">Notes</a>
+                <div class="footer-section">
+                    <h4>Learning</h4>
+                    <ul>
+                        <li><a href="#books">Book Library</a></li>
+                        <li><a href="#planner">Study Planner</a></li>
+                        <li><a href="#progress">Progress Tracking</a></li>
+                        <li><a href="#resources">Resources</a></li>
+                    </ul>
                 </div>
-                <div class="footer-social">
-                    <a href="#"><i class="fab fa-github"></i></a>
-                    <a href="#"><i class="fab fa-linkedin"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Community</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Feedback</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <p>Email: taherfarg50@gmail.com</p>
+                    <p>Location: Dubai, UAE</p>
+                    <div class="footer-stats">
+                        <small>Built with ❤️ for AI learners worldwide</small>
+                    </div>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 AI Learning Hub. Built for continuous learning.</p>
+                <p>&copy; 2025 AI Learning Hub. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
             </div>
         </div>
     </footer>
 
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <h3>Loading AI Learning Hub</h3>
+            <p>Preparing your personalized learning experience...</p>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div class="toast" id="toast">
+        <div class="toast-content">
+            <i class="toast-icon"></i>
+            <span class="toast-message"></span>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

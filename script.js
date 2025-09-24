@@ -1,648 +1,738 @@
-// AI Learning Hub - Interactive JavaScript
+// Professional AI Learning Hub - Advanced JavaScript
 class AILearningHub {
     constructor() {
-        this.books = [];
-        this.notes = [];
-        this.currentNote = null;
-        this.userProgress = {
-            booksRead: 0,
-            hoursSpent: 0,
-            achievements: 0,
-            completionRate: 0
+        this.books = [
+            {
+                id: 1,
+                title: "Artificial Intelligence: A Modern Approach",
+                description: "Comprehensive introduction to AI concepts, algorithms, and applications",
+                level: "intermediate",
+                file: "books/Artificial Intelligence - A Modern Approach (3rd Edition).pdf",
+                progress: 0,
+                favorite: false,
+                estimatedHours: 120,
+                difficulty: 8,
+                tags: ["AI", "Algorithms", "Theory"]
+            },
+            {
+                id: 2,
+                title: "Deep Learning with Python",
+                description: "Practical deep learning using Python, Keras, and TensorFlow",
+                level: "intermediate",
+                file: "books/Deep Learning with Python.pdf",
+                progress: 0,
+                favorite: false,
+                estimatedHours: 80,
+                difficulty: 7,
+                tags: ["Deep Learning", "Python", "Keras"]
+            },
+            {
+                id: 3,
+                title: "Hands-On Machine Learning",
+                description: "Complete guide to ML with Scikit-Learn, Keras, and TensorFlow",
+                level: "beginner",
+                file: "books/Hands On Machine Learning with Scikit Learn and TensorFlow.pdf",
+                progress: 0,
+                favorite: false,
+                estimatedHours: 100,
+                difficulty: 6,
+                tags: ["Machine Learning", "Scikit-Learn", "TensorFlow"]
+            },
+            {
+                id: 4,
+                title: "Elements of Statistical Learning",
+                description: "Mathematical foundations of machine learning and statistical inference",
+                level: "advanced",
+                file: "books/The Elements of Statistical Learning (2nd Edition).pdf",
+                progress: 0,
+                favorite: false,
+                estimatedHours: 150,
+                difficulty: 9,
+                tags: ["Statistics", "Mathematics", "Theory"]
+            },
+            {
+                id: 5,
+                title: "Feature Engineering for ML",
+                description: "Advanced techniques for creating better features and improving models",
+                level: "intermediate",
+                file: "books/Feature Engineering for Machine Learning.pdf",
+                progress: 0,
+                favorite: false,
+                estimatedHours: 60,
+                difficulty: 7,
+                tags: ["Feature Engineering", "Data Science"]
+            },
+            {
+                id: 6,
+                title: "Generative Deep Learning",
+                description: "Teaching machines to paint, write, compose, and play using generative models",
+                level: "advanced",
+                file: "books/generative-deep-learning-teaching-machines-to-paint-write-compose-and-play-1492041947-978-1492041948_compress.pdf",
+                progress: 0,
+                favorite: false,
+                estimatedHours: 90,
+                difficulty: 8,
+                tags: ["Generative AI", "Deep Learning", "Creative AI"]
+            },
+            {
+                id: 7,
+                title: "ML Design Patterns",
+                description: "Solutions to common challenges in data preparation, model building, and MLOps",
+                level: "intermediate",
+                file: "books/machine-learning-design-patterns-solutions-to-common-challenges-in-data-preparation-model-building-and-mlops-1098115783-9781098115784_compress.pdf",
+                progress: 0,
+                favorite: false,
+                estimatedHours: 70,
+                difficulty: 7,
+                tags: ["MLOps", "Design Patterns", "Best Practices"]
+            },
+            {
+                id: 8,
+                title: "Essential Math for AI",
+                description: "Mathematical foundations for efficient and successful AI systems",
+                level: "beginner",
+                file: "books/essential-math-for-ai-next-level-mathematics-for-efficient-and-successful-ai-systems-1nbsped-1098107632-9781098107635_compress.pdf",
+                progress: 0,
+                favorite: false,
+                estimatedHours: 80,
+                difficulty: 6,
+                tags: ["Mathematics", "Linear Algebra", "Statistics"]
+            }
+        ];
+
+        this.todos = JSON.parse(localStorage.getItem('aiHub_todos')) || [];
+        this.bookProgress = JSON.parse(localStorage.getItem('aiHub_bookProgress')) || {};
+        this.userStats = JSON.parse(localStorage.getItem('aiHub_userStats')) || {
+            totalHours: 0,
+            streak: 0,
+            lastStudyDate: null,
+            achievements: []
+        };
+
+        this.currentFilter = 'all';
+        this.currentView = 'grid';
+        this.studyTimer = {
+            minutes: 25,
+            seconds: 0,
+            isRunning: false,
+            interval: null
         };
 
         this.init();
     }
 
     init() {
-        this.loadBooks();
+        this.showLoadingScreen();
         this.setupEventListeners();
-        this.loadUserData();
-        this.updateProgressDisplay();
-        this.animateOnLoad();
+        this.renderBooks();
+        this.renderTodos();
+        this.updateAnalytics();
+        this.initializeAnimations();
+        this.hideLoadingScreen();
     }
 
-    // Load books data
-    loadBooks() {
-        this.books = [
-            {
-                id: 1,
-                title: "Artificial Intelligence - A Modern Approach",
-                author: "Stuart Russell & Peter Norvig",
-                category: "core-ai",
-                description: "Comprehensive introduction to the theory and practice of artificial intelligence, covering foundational concepts, algorithms, and applications.",
-                pages: 1152,
-                difficulty: "Advanced",
-                tags: ["AI Fundamentals", "Search", "Logic", "Planning"],
-                path: "Machine Learning Fundamentals"
-            },
-            {
-                id: 2,
-                title: "Deep Learning with Python",
-                author: "François Chollet",
-                category: "deep-learning",
-                description: "Practical guide to deep learning using Keras and TensorFlow, covering neural networks, CNNs, RNNs, and advanced architectures.",
-                pages: 384,
-                difficulty: "Intermediate",
-                tags: ["Keras", "TensorFlow", "Neural Networks", "Computer Vision"],
-                path: "Deep Learning Mastery"
-            },
-            {
-                id: 3,
-                title: "Hands-On Machine Learning with Scikit-Learn and TensorFlow",
-                author: "Aurélien Géron",
-                category: "deep-learning",
-                description: "Practical guide to machine learning with scikit-learn, Keras, and TensorFlow, covering end-to-end ML projects.",
-                pages: 856,
-                difficulty: "Intermediate",
-                tags: ["Scikit-learn", "TensorFlow", "ML Projects", "Best Practices"],
-                path: "Machine Learning Fundamentals"
-            },
-            {
-                id: 4,
-                title: "The Elements of Statistical Learning",
-                author: "Trevor Hastie, Robert Tibshirani & Jerome Friedman",
-                category: "mathematics",
-                description: "Comprehensive treatment of statistical learning methods, covering supervised and unsupervised learning algorithms.",
-                pages: 745,
-                difficulty: "Advanced",
-                tags: ["Statistical Learning", "Linear Models", "SVM", "Unsupervised Learning"],
-                path: "Mathematics for AI"
-            },
-            {
-                id: 5,
-                title: "Feature Engineering for Machine Learning",
-                author: "Alice Zheng & Amanda Casari",
-                category: "applications",
-                description: "Practical guide to feature engineering techniques and best practices for building effective machine learning models.",
-                pages: 214,
-                difficulty: "Intermediate",
-                tags: ["Feature Engineering", "Data Preprocessing", "Model Performance"],
-                path: "Machine Learning Fundamentals"
-            },
-            {
-                id: 6,
-                title: "Essential Math for AI",
-                author: "Hala Nelson",
-                category: "mathematics",
-                description: "Next-level mathematics for efficient and successful AI systems, covering essential mathematical concepts for AI practitioners.",
-                pages: 608,
-                difficulty: "Intermediate",
-                tags: ["Linear Algebra", "Probability", "Calculus", "AI Math"],
-                path: "Mathematics for AI"
-            },
-            {
-                id: 7,
-                title: "Generative Deep Learning",
-                author: "David Foster",
-                category: "deep-learning",
-                description: "Teaching machines to paint, write, compose, and play - comprehensive guide to generative models and creative AI.",
-                pages: 456,
-                difficulty: "Advanced",
-                tags: ["GANs", "VAEs", "Generative Models", "Creative AI"],
-                path: "Deep Learning Mastery"
-            },
-            {
-                id: 8,
-                title: "Machine Learning Design Patterns",
-                author: "Valliappa Lakshmanan, Sara Robinson & Michael Munn",
-                category: "applications",
-                description: "Solutions to common challenges in data preparation, model building, and MLOps for production machine learning systems.",
-                pages: 408,
-                difficulty: "Intermediate",
-                tags: ["MLOps", "Design Patterns", "Production ML", "Best Practices"],
-                path: "Machine Learning Fundamentals"
-            },
-            {
-                id: 9,
-                title: "Artificial Intelligence: An Introduction to the Big Ideas",
-                author: "Robert H. Chen & Chelsea C. Chen",
-                category: "core-ai",
-                description: "Accessible introduction to the big ideas and concepts in artificial intelligence for beginners and enthusiasts.",
-                pages: 192,
-                difficulty: "Beginner",
-                tags: ["AI Concepts", "Introduction", "Big Ideas", "Philosophy"],
-                path: "Machine Learning Fundamentals"
-            },
-            {
-                id: 10,
-                title: "Computer Vision: Algorithms and Applications",
-                author: "Richard Szeliski",
-                category: "applications",
-                description: "Comprehensive introduction to computer vision covering fundamental concepts, algorithms, and real-world applications.",
-                pages: 832,
-                difficulty: "Advanced",
-                tags: ["Computer Vision", "Image Processing", "Feature Detection", "3D Vision"],
-                path: "Computer Vision"
-            },
-            {
-                id: 11,
-                title: "Natural Language Processing with Transformers",
-                author: "Lewis Tunstall, Leandro von Werra & Thomas Wolf",
-                category: "applications",
-                description: "Practical guide to building, training, and fine-tuning transformer models for natural language processing tasks.",
-                pages: 406,
-                difficulty: "Intermediate",
-                tags: ["NLP", "Transformers", "Hugging Face", "BERT", "GPT"],
-                path: "Natural Language Processing"
-            },
-            {
-                id: 12,
-                title: "Reinforcement Learning: An Introduction",
-                author: "Richard S. Sutton & Andrew G. Barto",
-                category: "core-ai",
-                description: "Comprehensive introduction to reinforcement learning covering theory, algorithms, and applications.",
-                pages: 552,
-                difficulty: "Advanced",
-                tags: ["Reinforcement Learning", "Markov Decision Processes", "Q-Learning"],
-                path: "Machine Learning Fundamentals"
-            },
-            {
-                id: 13,
-                title: "Pattern Recognition and Machine Learning",
-                author: "Christopher M. Bishop",
-                category: "mathematics",
-                description: "Statistical pattern recognition and machine learning covering Bayesian methods, neural networks, and graphical models.",
-                pages: 738,
-                difficulty: "Advanced",
-                tags: ["Pattern Recognition", "Bayesian Methods", "Graphical Models"],
-                path: "Mathematics for AI"
-            },
-            {
-                id: 14,
-                title: "Speech and Language Processing",
-                author: "Daniel Jurafsky & James H. Martin",
-                category: "applications",
-                description: "Comprehensive introduction to speech and language processing covering ASR, NLP, and dialogue systems.",
-                pages: 1024,
-                difficulty: "Advanced",
-                tags: ["Speech Recognition", "NLP", "Dialogue Systems", "Computational Linguistics"],
-                path: "Natural Language Processing"
-            },
-            {
-                id: 15,
-                title: "Arabic Natural Language Processing",
-                author: "Nizar Y. Habash",
-                category: "applications",
-                description: "Comprehensive guide to Arabic NLP covering morphology, syntax, and computational approaches for Arabic text processing.",
-                pages: 432,
-                difficulty: "Advanced",
-                tags: ["Arabic NLP", "Morphology", "Syntax", "Computational Linguistics"],
-                path: "Natural Language Processing"
-            }
-        ];
-
-        this.renderBooks(this.books);
-    }
-
-    // Render books to the grid
-    renderBooks(books) {
-        const booksGrid = document.getElementById('booksGrid');
-        booksGrid.innerHTML = '';
-
-        if (books.length === 0) {
-            booksGrid.innerHTML = '<div class="loading">No books found matching your search.</div>';
-            return;
+    showLoadingScreen() {
+        const loadingScreen = document.getElementById('loadingScreen');
+        if (loadingScreen) {
+            loadingScreen.style.display = 'flex';
         }
-
-        books.forEach(book => {
-            const bookCard = document.createElement('div');
-            bookCard.className = 'book-card fade-in';
-            bookCard.dataset.id = book.id;
-            bookCard.dataset.category = book.category;
-
-            const progress = this.getBookProgress(book.id);
-            const progressWidth = Math.min((progress / book.pages) * 100, 100);
-
-            bookCard.innerHTML = `
-                <div class="book-category">${this.getCategoryName(book.category)}</div>
-                <h3 class="book-title">${book.title}</h3>
-                <div class="book-author">by ${book.author}</div>
-                <div class="book-description">${book.description}</div>
-                <div class="book-meta">
-                    <span><i class="fas fa-book"></i> ${book.pages} pages</span>
-                    <span><i class="fas fa-signal"></i> ${book.difficulty}</span>
-                </div>
-                <div class="book-progress">
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: ${progressWidth}%"></div>
-                    </div>
-                    <span>${progress}/${book.pages} pages</span>
-                </div>
-                <div class="book-actions">
-                    <button class="btn btn-outline btn-book" onclick="aiHub.openBook(${book.id})">
-                        <i class="fas fa-book-open"></i> Read
-                    </button>
-                    <button class="btn btn-outline btn-book" onclick="aiHub.takeNotes(${book.id})">
-                        <i class="fas fa-sticky-note"></i> Notes
-                    </button>
-                </div>
-            `;
-
-            booksGrid.appendChild(bookCard);
-        });
     }
 
-    // Get category display name
-    getCategoryName(category) {
-        const categories = {
-            'core-ai': 'Core AI',
-            'deep-learning': 'Deep Learning',
-            'mathematics': 'Mathematics',
-            'applications': 'Applications'
-        };
-        return categories[category] || category;
+    hideLoadingScreen() {
+        setTimeout(() => {
+            const loadingScreen = document.getElementById('loadingScreen');
+            if (loadingScreen) {
+                loadingScreen.classList.add('hidden');
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                }, 500);
+            }
+        }, 1500);
     }
 
-    // Setup event listeners
     setupEventListeners() {
         // Navigation
-        const navLinks = document.querySelectorAll('.nav-link');
-        navLinks.forEach(link => {
+        document.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
-                const targetId = link.getAttribute('href').substring(1);
-                this.scrollToSection(targetId);
-
-                // Update active nav link
-                navLinks.forEach(l => l.classList.remove('active'));
-                link.classList.add('active');
+                this.handleNavigation(e.target);
             });
         });
 
-        // Mobile navigation
-        const navToggle = document.querySelector('.nav-toggle');
-        const navMenu = document.querySelector('.nav-menu');
+        // Theme toggle
+        const themeToggle = document.getElementById('themeToggle');
+        if (themeToggle) {
+            themeToggle.addEventListener('click', () => this.toggleTheme());
+        }
 
-        navToggle.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
+        // Book filters
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => this.handleFilter(e.target));
         });
 
-        // Search functionality
-        const searchInput = document.getElementById('searchInput');
-        searchInput.addEventListener('input', (e) => {
-            this.filterBooks(e.target.value);
+        // View toggle
+        document.querySelectorAll('.view-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => this.handleViewToggle(e.target));
         });
 
-        // Filter buttons
-        const filterBtns = document.querySelectorAll('.filter-btn');
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                filterBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                this.filterByCategory(btn.dataset.category);
+        // Search
+        const searchInput = document.getElementById('bookSearch');
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => this.handleSearch(e.target.value));
+        }
+
+        // Todo functionality
+        const addTodoBtn = document.getElementById('addTodo');
+        const todoInput = document.getElementById('todoInput');
+        
+        if (addTodoBtn) {
+            addTodoBtn.addEventListener('click', () => this.addTodo());
+        }
+        
+        if (todoInput) {
+            todoInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') this.addTodo();
             });
-        });
+        }
 
-        // Learning path buttons
-        const pathBtns = document.querySelectorAll('.path-card .btn');
-        pathBtns.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const pathCard = e.target.closest('.path-card');
-                const pathTitle = pathCard.querySelector('.path-title').textContent;
-                this.startLearningPath(pathTitle);
-            });
-        });
+        // Study timer
+        this.setupTimerControls();
 
-        // Notes functionality
-        document.getElementById('newNoteBtn').addEventListener('click', () => this.createNewNote());
-        document.getElementById('saveNoteBtn').addEventListener('click', () => this.saveNote());
-        document.getElementById('deleteNoteBtn').addEventListener('click', () => this.deleteNote());
+        // Scroll animations
+        this.setupScrollAnimations();
 
-        // Note selection
-        document.getElementById('notesList').addEventListener('click', (e) => {
-            if (e.target.closest('.note-item')) {
-                const noteItem = e.target.closest('.note-item');
-                this.selectNote(noteItem.dataset.id);
-            }
-        });
+        // Auto-save
+        setInterval(() => this.saveData(), 30000);
     }
 
-    // Filter books by search term
-    filterBooks(searchTerm) {
-        const filteredBooks = this.books.filter(book =>
-            book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            book.author.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            book.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))
-        );
-        this.renderBooks(filteredBooks);
-    }
-
-    // Filter books by category
-    filterByCategory(category) {
-        if (category === 'all') {
-            this.renderBooks(this.books);
-        } else {
-            const filteredBooks = this.books.filter(book => book.category === category);
-            this.renderBooks(filteredBooks);
+    handleNavigation(link) {
+        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+        
+        const target = link.getAttribute('href');
+        const element = document.querySelector(target);
+        
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
     }
 
-    // Get book progress
-    getBookProgress(bookId) {
-        const progress = localStorage.getItem(`book_${bookId}_progress`);
-        return progress ? parseInt(progress) : 0;
+    toggleTheme() {
+        const body = document.body;
+        const currentTheme = body.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        body.setAttribute('data-theme', newTheme);
+        localStorage.setItem('aiHub_theme', newTheme);
+        
+        const icon = document.querySelector('#themeToggle i');
+        if (icon) {
+            icon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+        }
+        
+        this.showToast('Theme updated', 'success');
     }
 
-    // Update book progress
-    updateBookProgress(bookId, pages) {
-        localStorage.setItem(`book_${bookId}_progress`, pages.toString());
-        this.updateProgressDisplay();
-        this.renderBooks(this.books); // Re-render to update progress bars
+    handleFilter(button) {
+        document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        
+        this.currentFilter = button.dataset.filter;
+        this.renderBooks();
     }
 
-    // Open book for reading
-    openBook(bookId) {
-        const book = this.books.find(b => b.id === bookId);
-        if (!book) return;
+    handleViewToggle(button) {
+        document.querySelectorAll('.view-btn').forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        
+        this.currentView = button.dataset.view;
+        this.renderBooks();
+    }
 
-        // Create reading modal
-        const modal = document.createElement('div');
-        modal.className = 'modal';
-        modal.innerHTML = `
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2>${book.title}</h2>
-                    <button class="close-btn" onclick="this.closest('.modal').remove()">
-                        <i class="fas fa-times"></i>
-                    </button>
+    handleSearch(query) {
+        this.searchQuery = query.toLowerCase();
+        this.renderBooks();
+    }
+
+    renderBooks() {
+        const booksGrid = document.getElementById('booksGrid');
+        if (!booksGrid) return;
+
+        let filteredBooks = this.books;
+
+        // Apply filters
+        if (this.currentFilter !== 'all') {
+            if (this.currentFilter === 'favorites') {
+                filteredBooks = filteredBooks.filter(book => book.favorite);
+            } else {
+                filteredBooks = filteredBooks.filter(book => book.level === this.currentFilter);
+            }
+        }
+
+        // Apply search
+        if (this.searchQuery) {
+            filteredBooks = filteredBooks.filter(book => 
+                book.title.toLowerCase().includes(this.searchQuery) ||
+                book.description.toLowerCase().includes(this.searchQuery) ||
+                book.tags.some(tag => tag.toLowerCase().includes(this.searchQuery))
+            );
+        }
+
+        // Update grid class based on view
+        booksGrid.className = this.currentView === 'list' ? 'books-list' : 'books-grid';
+
+        booksGrid.innerHTML = filteredBooks.map(book => this.createBookCard(book)).join('');
+    }
+
+    createBookCard(book) {
+        const progress = this.bookProgress[book.id] || 0;
+        const progressWidth = Math.min(progress, 100);
+        
+        return `
+            <div class="book-card animate-fade-in-up" data-book-id="${book.id}">
+                <button class="book-favorite ${book.favorite ? 'active' : ''}" 
+                        onclick="aiHub.toggleFavorite(${book.id})">
+                    <i class="fas fa-heart"></i>
+                </button>
+                <div class="book-level ${book.level}">${book.level}</div>
+                <h3>${book.title}</h3>
+                <p>${book.description}</p>
+                <div class="book-meta">
+                    <span class="book-duration">
+                        <i class="fas fa-clock"></i> ${book.estimatedHours}h
+                    </span>
+                    <span class="book-difficulty">
+                        <i class="fas fa-signal"></i> ${book.difficulty}/10
+                    </span>
                 </div>
-                <div class="modal-body">
-                    <div class="reading-progress">
-                        <label>Reading Progress: </label>
-                        <input type="range" min="0" max="${book.pages}" value="${this.getBookProgress(bookId)}"
-                               oninput="aiHub.updateProgressDisplay()"
-                               onchange="aiHub.updateBookProgress(${bookId}, this.value)">
-                        <span class="progress-text">${this.getBookProgress(bookId)} / ${book.pages} pages</span>
-                    </div>
-                    <div class="reading-content">
-                        <p>This is a preview of "${book.title}". In a full implementation, this would show the actual book content or link to the PDF file.</p>
-                        <div class="book-info">
-                            <h3>Book Information</h3>
-                            <p><strong>Author:</strong> ${book.author}</p>
-                            <p><strong>Category:</strong> ${this.getCategoryName(book.category)}</p>
-                            <p><strong>Pages:</strong> ${book.pages}</p>
-                            <p><strong>Difficulty:</strong> ${book.difficulty}</p>
-                            <p><strong>Tags:</strong> ${book.tags.join(', ')}</p>
-                        </div>
-                        <div class="reading-actions">
-                            <button class="btn btn-primary" onclick="aiHub.takeNotes(${bookId})">
-                                <i class="fas fa-sticky-note"></i> Take Notes
-                            </button>
-                            <button class="btn btn-outline" onclick="aiHub.markAsComplete(${bookId})">
-                                <i class="fas fa-check"></i> Mark Complete
-                            </button>
-                        </div>
-                    </div>
+                <div class="book-tags">
+                    ${book.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                </div>
+                <div class="book-progress">
+                    <div class="book-progress-fill" style="width: ${progressWidth}%"></div>
+                </div>
+                <div class="progress-text">${progress}% Complete</div>
+                <div class="book-actions">
+                    <a href="${book.file}" class="btn btn-primary" target="_blank" 
+                       onclick="aiHub.trackBookOpen(${book.id})">
+                        <i class="fas fa-book-open"></i> Read
+                    </a>
+                    <button class="btn btn-secondary" onclick="aiHub.updateBookProgress(${book.id})">
+                        <i class="fas fa-plus"></i> +25%
+                    </button>
                 </div>
             </div>
         `;
-
-        // Add modal styles
-        modal.style.cssText = `
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8); z-index: 10000; display: flex;
-            align-items: center; justify-content: center; padding: 20px;
-        `;
-
-        const modalContent = modal.querySelector('.modal-content');
-        modalContent.style.cssText = `
-            background: white; border-radius: 12px; max-width: 800px; width: 100%;
-            max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-        `;
-
-        const modalHeader = modal.querySelector('.modal-header');
-        modalHeader.style.cssText = `
-            padding: 24px; border-bottom: 1px solid #dee2e6; display: flex;
-            justify-content: space-between; align-items: center;
-        `;
-
-        const modalBody = modal.querySelector('.modal-body');
-        modalBody.style.cssText = `
-            padding: 24px;
-        `;
-
-        const closeBtn = modal.querySelector('.close-btn');
-        closeBtn.style.cssText = `
-            background: none; border: none; font-size: 24px; cursor: pointer;
-            color: #6c757d; padding: 0; width: 30px; height: 30px; display: flex;
-            align-items: center; justify-content: center;
-        `;
-
-        document.body.appendChild(modal);
     }
 
-    // Update progress display
-    updateProgressDisplay() {
-        const totalBooks = this.books.length;
-        const completedBooks = this.books.filter(book => this.getBookProgress(book.id) >= book.pages).length;
-        const totalPages = this.books.reduce((sum, book) => sum + book.pages, 0);
-        const readPages = this.books.reduce((sum, book) => sum + this.getBookProgress(book.id), 0);
-
-        this.userProgress.booksRead = completedBooks;
-        this.userProgress.completionRate = totalBooks > 0 ? Math.round((completedBooks / totalBooks) * 100) : 0;
-        this.userProgress.hoursSpent = Math.round(readPages / 50); // Assuming 50 pages per hour
-
-        document.getElementById('booksRead').textContent = completedBooks;
-        document.getElementById('completionRate').textContent = this.userProgress.completionRate + '%';
-        document.getElementById('hoursSpent').textContent = this.userProgress.hoursSpent;
-        document.getElementById('achievements').textContent = Math.floor(completedBooks / 2); // Achievement every 2 books
-    }
-
-    // Mark book as complete
-    markAsComplete(bookId) {
+    toggleFavorite(bookId) {
         const book = this.books.find(b => b.id === bookId);
         if (book) {
-            this.updateBookProgress(bookId, book.pages);
-            this.showNotification(`🎉 "${book.title}" marked as complete!`, 'success');
+            book.favorite = !book.favorite;
+            this.renderBooks();
+            this.saveData();
+            this.showToast(
+                book.favorite ? 'Added to favorites' : 'Removed from favorites',
+                'success'
+            );
         }
     }
 
-    // Show notification
-    showNotification(message, type = 'info') {
-        const notification = document.createElement('div');
-        notification.className = `notification notification-${type}`;
-        notification.textContent = message;
-        notification.style.cssText = `
-            position: fixed; top: 100px; right: 20px; padding: 16px 24px;
-            background: ${type === 'success' ? '#28a745' : '#007bff'};
-            color: white; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            z-index: 10001; transform: translateX(100%); transition: transform 0.3s ease;
-        `;
-
-        document.body.appendChild(notification);
-
-        // Animate in
-        setTimeout(() => {
-            notification.style.transform = 'translateX(0)';
-        }, 100);
-
-        // Remove after 3 seconds
-        setTimeout(() => {
-            notification.style.transform = 'translateX(100%)';
-            setTimeout(() => notification.remove(), 300);
-        }, 3000);
-    }
-
-    // Notes functionality
-    createNewNote() {
-        this.currentNote = {
-            id: Date.now(),
-            title: 'New Note',
-            content: '',
-            bookId: null,
-            bookTitle: 'No book selected',
-            date: new Date().toLocaleDateString()
-        };
-        this.renderNoteEditor();
-    }
-
-    takeNotes(bookId) {
+    trackBookOpen(bookId) {
         const book = this.books.find(b => b.id === bookId);
         if (book) {
-            this.currentNote = {
-                id: Date.now(),
-                title: `Notes: ${book.title}`,
-                content: '',
-                bookId: bookId,
-                bookTitle: book.title,
-                date: new Date().toLocaleDateString()
-            };
-            this.renderNoteEditor();
-            this.openNotesModal();
+            this.userStats.totalHours += 0.1; // Track opening as small time increment
+            this.updateStreak();
+            this.saveData();
         }
     }
 
-    renderNoteEditor() {
-        if (!this.currentNote) return;
-
-        document.getElementById('noteTitle').value = this.currentNote.title;
-        document.getElementById('noteContent').value = this.currentNote.content;
-        document.getElementById('noteBook').textContent = this.currentNote.bookTitle;
-        document.getElementById('noteDate').textContent = this.currentNote.date;
-    }
-
-    saveNote() {
-        if (!this.currentNote) return;
-
-        this.currentNote.title = document.getElementById('noteTitle').value;
-        this.currentNote.content = document.getElementById('noteContent').value;
-        this.currentNote.date = new Date().toLocaleDateString();
-
-        const existingIndex = this.notes.findIndex(note => note.id === this.currentNote.id);
-        if (existingIndex >= 0) {
-            this.notes[existingIndex] = { ...this.currentNote };
+    updateBookProgress(bookId) {
+        const currentProgress = this.bookProgress[bookId] || 0;
+        const newProgress = Math.min(currentProgress + 25, 100);
+        
+        this.bookProgress[bookId] = newProgress;
+        
+        if (newProgress === 100) {
+            this.checkAchievements();
+            this.showToast('Book completed! 🎉', 'success');
         } else {
-            this.notes.push({ ...this.currentNote });
+            this.showToast(`Progress updated: ${newProgress}%`, 'success');
         }
-
-        this.saveNotesToStorage();
-        this.renderNotesList();
-        this.showNotification('Note saved successfully!', 'success');
+        
+        this.renderBooks();
+        this.updateAnalytics();
+        this.updateRoadmapProgress();
+        this.saveData();
     }
 
-    deleteNote() {
-        if (!this.currentNote) return;
+    // Todo Management
+    addTodo() {
+        const input = document.getElementById('todoInput');
+        const text = input.value.trim();
+        
+        if (!text) return;
+        
+        const todo = {
+            id: Date.now(),
+            text,
+            completed: false,
+            createdAt: new Date().toISOString(),
+            priority: 'normal'
+        };
+        
+        this.todos.unshift(todo);
+        input.value = '';
+        this.renderTodos();
+        this.saveData();
+        this.showToast('Task added', 'success');
+    }
 
-        if (confirm('Are you sure you want to delete this note?')) {
-            this.notes = this.notes.filter(note => note.id !== this.currentNote.id);
-            this.saveNotesToStorage();
-            this.renderNotesList();
-            this.createNewNote();
-            this.showNotification('Note deleted successfully!', 'success');
+    toggleTodo(id) {
+        const todo = this.todos.find(t => t.id === id);
+        if (todo) {
+            todo.completed = !todo.completed;
+            if (todo.completed) {
+                this.userStats.totalHours += 0.5; // Add time for completed tasks
+                this.updateStreak();
+            }
+            this.renderTodos();
+            this.updateAnalytics();
+            this.saveData();
         }
     }
 
-    selectNote(noteId) {
-        const note = this.notes.find(n => n.id == noteId);
-        if (note) {
-            this.currentNote = note;
-            this.renderNoteEditor();
+    deleteTodo(id) {
+        this.todos = this.todos.filter(t => t.id !== id);
+        this.renderTodos();
+        this.saveData();
+        this.showToast('Task deleted', 'info');
+    }
 
-            // Update active state in list
-            document.querySelectorAll('.note-item').forEach(item => {
-                item.classList.remove('active');
-                if (item.dataset.id == noteId) {
-                    item.classList.add('active');
+    renderTodos() {
+        const todoList = document.getElementById('todoList');
+        const todoCount = document.getElementById('todoCount');
+        
+        if (!todoList) return;
+        
+        const activeTodos = this.todos.filter(t => !t.completed);
+        const completedTodos = this.todos.filter(t => t.completed);
+        
+        if (todoCount) {
+            todoCount.textContent = `${activeTodos.length} active tasks`;
+        }
+        
+        todoList.innerHTML = this.todos.map(todo => `
+            <li class="todo-item ${todo.completed ? 'completed' : ''}">
+                <input type="checkbox" class="todo-checkbox" 
+                       ${todo.completed ? 'checked' : ''} 
+                       onchange="aiHub.toggleTodo(${todo.id})">
+                <span class="todo-text ${todo.completed ? 'completed' : ''}">${todo.text}</span>
+                <button class="todo-delete" onclick="aiHub.deleteTodo(${todo.id})">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </li>
+        `).join('');
+    }
+
+    // Study Timer
+    setupTimerControls() {
+        const startBtn = document.getElementById('startTimer');
+        const pauseBtn = document.getElementById('pauseTimer');
+        const resetBtn = document.getElementById('resetTimer');
+        
+        if (startBtn) startBtn.addEventListener('click', () => this.startTimer());
+        if (pauseBtn) pauseBtn.addEventListener('click', () => this.pauseTimer());
+        if (resetBtn) resetBtn.addEventListener('click', () => this.resetTimer());
+    }
+
+    startTimer() {
+        if (this.studyTimer.isRunning) return;
+        
+        this.studyTimer.isRunning = true;
+        this.studyTimer.interval = setInterval(() => {
+            if (this.studyTimer.seconds === 0) {
+                if (this.studyTimer.minutes === 0) {
+                    this.timerComplete();
+                    return;
                 }
-            });
+                this.studyTimer.minutes--;
+                this.studyTimer.seconds = 59;
+            } else {
+                this.studyTimer.seconds--;
+            }
+            this.updateTimerDisplay();
+        }, 1000);
+        
+        this.showToast('Study timer started', 'success');
+    }
+
+    pauseTimer() {
+        this.studyTimer.isRunning = false;
+        if (this.studyTimer.interval) {
+            clearInterval(this.studyTimer.interval);
+        }
+        this.showToast('Timer paused', 'info');
+    }
+
+    resetTimer() {
+        this.pauseTimer();
+        this.studyTimer.minutes = 25;
+        this.studyTimer.seconds = 0;
+        this.updateTimerDisplay();
+        this.showToast('Timer reset', 'info');
+    }
+
+    timerComplete() {
+        this.pauseTimer();
+        this.userStats.totalHours += 0.42; // 25 minutes = 0.42 hours
+        this.updateStreak();
+        this.updateAnalytics();
+        this.saveData();
+        this.showToast('Study session complete! 🎉', 'success');
+        this.resetTimer();
+    }
+
+    updateTimerDisplay() {
+        const display = document.getElementById('timerDisplay');
+        if (display) {
+            const minutes = String(this.studyTimer.minutes).padStart(2, '0');
+            const seconds = String(this.studyTimer.seconds).padStart(2, '0');
+            display.textContent = `${minutes}:${seconds}`;
         }
     }
 
-    renderNotesList() {
-        const notesList = document.getElementById('notesList');
-        if (this.notes.length === 0) {
-            notesList.innerHTML = '<p class="no-notes">No notes yet. Start reading to add notes!</p>';
-            return;
-        }
+    // Analytics and Progress
+    updateAnalytics() {
+        this.updateProgressCards();
+        this.updateProgressRings();
+        this.updateRoadmapProgress();
+    }
 
-        notesList.innerHTML = this.notes.map(note => `
-            <div class="note-item" data-id="${note.id}">
-                <div class="note-item-title">${note.title}</div>
-                <div class="note-item-meta">${note.bookTitle} • ${note.date}</div>
+    updateProgressCards() {
+        const completedBooks = Object.values(this.bookProgress).filter(p => p >= 100).length;
+        const totalBooks = this.books.length;
+        const completionRate = totalBooks > 0 ? Math.round((completedBooks / totalBooks) * 100) : 0;
+        
+        // Update metric values
+        const cards = document.querySelectorAll('.analytics-card');
+        cards.forEach(card => {
+            const header = card.querySelector('.card-header h3').textContent;
+            const valueElement = card.querySelector('.metric-value');
+            
+            if (header.includes('Books')) {
+                valueElement.innerHTML = `${completedBooks}<span class="metric-total">/${totalBooks}</span>`;
+            } else if (header.includes('Streak')) {
+                valueElement.innerHTML = `${this.userStats.streak}<span class="metric-unit">days</span>`;
+            } else if (header.includes('Hours')) {
+                valueElement.innerHTML = `${Math.round(this.userStats.totalHours)}<span class="metric-unit">h</span>`;
+            } else if (header.includes('Rate')) {
+                valueElement.innerHTML = `${completionRate}<span class="metric-unit">%</span>`;
+            }
+        });
+    }
+
+    updateProgressRings() {
+        const completedBooks = Object.values(this.bookProgress).filter(p => p >= 100).length;
+        const totalBooks = this.books.length;
+        const percentage = totalBooks > 0 ? (completedBooks / totalBooks) * 100 : 0;
+        
+        const circle = document.querySelector('.progress-ring-circle');
+        if (circle) {
+            const circumference = 2 * Math.PI * 25; // radius = 25
+            const offset = circumference - (percentage / 100) * circumference;
+            circle.style.strokeDashoffset = offset;
+        }
+    }
+
+    updateRoadmapProgress() {
+        const completedBooks = Object.values(this.bookProgress).filter(p => p >= 100).length;
+        const totalBooks = this.books.length;
+        const booksPerPhase = Math.ceil(totalBooks / 4);
+        
+        document.querySelectorAll('.progress-fill').forEach((fill, index) => {
+            const phaseStart = index * booksPerPhase;
+            const phaseEnd = Math.min((index + 1) * booksPerPhase, totalBooks);
+            const phaseCompleted = Math.min(completedBooks - phaseStart, booksPerPhase);
+            const phaseProgress = Math.max(0, (phaseCompleted / booksPerPhase) * 100);
+            
+            fill.style.width = `${phaseProgress}%`;
+            
+            const progressText = fill.parentElement.querySelector('.progress-text');
+            if (progressText) {
+                progressText.textContent = `${Math.round(phaseProgress)}%`;
+            }
+            
+            // Update roadmap step status
+            const step = document.querySelectorAll('.roadmap-step')[index];
+            if (step && phaseProgress >= 100) {
+                step.classList.add('completed');
+            }
+        });
+    }
+
+    updateStreak() {
+        const today = new Date().toDateString();
+        const lastStudy = this.userStats.lastStudyDate;
+        
+        if (lastStudy !== today) {
+            if (lastStudy === new Date(Date.now() - 86400000).toDateString()) {
+                this.userStats.streak++;
+            } else if (lastStudy !== today) {
+                this.userStats.streak = 1;
+            }
+            this.userStats.lastStudyDate = today;
+        }
+    }
+
+    checkAchievements() {
+        const completedBooks = Object.values(this.bookProgress).filter(p => p >= 100).length;
+        const achievements = [];
+        
+        if (completedBooks >= 1 && !this.userStats.achievements.includes('first_book')) {
+            achievements.push('first_book');
+            this.showToast('Achievement unlocked: First Book! 🏆', 'success');
+        }
+        
+        if (this.userStats.streak >= 7 && !this.userStats.achievements.includes('week_streak')) {
+            achievements.push('week_streak');
+            this.showToast('Achievement unlocked: Week Streak! 🔥', 'success');
+        }
+        
+        if (completedBooks >= 5 && !this.userStats.achievements.includes('ai_expert')) {
+            achievements.push('ai_expert');
+            this.showToast('Achievement unlocked: AI Expert! 🧠', 'success');
+        }
+        
+        this.userStats.achievements.push(...achievements);
+        this.updateAchievementDisplay();
+    }
+
+    updateAchievementDisplay() {
+        const achievementList = document.getElementById('achievementList');
+        if (!achievementList) return;
+        
+        const achievements = [
+            { id: 'first_book', icon: 'fas fa-medal', title: 'First Book', desc: 'Complete your first book' },
+            { id: 'week_streak', icon: 'fas fa-fire', title: 'Week Streak', desc: 'Study for 7 consecutive days' },
+            { id: 'ai_expert', icon: 'fas fa-trophy', title: 'AI Expert', desc: 'Complete 5 books' }
+        ];
+        
+        achievementList.innerHTML = achievements.map(achievement => `
+            <div class="achievement ${this.userStats.achievements.includes(achievement.id) ? '' : 'locked'}">
+                <i class="${achievement.icon}"></i>
+                <div class="achievement-info">
+                    <h4>${achievement.title}</h4>
+                    <p>${achievement.desc}</p>
+                </div>
             </div>
         `).join('');
     }
 
-    openNotesModal() {
-        // This could open a modal for better note-taking experience
-        this.scrollToSection('notes');
-    }
-
-    // Learning paths functionality
-    startLearningPath(pathName) {
-        this.showNotification(`Starting learning path: ${pathName}`, 'info');
-        this.scrollToSection('library');
-
-        // Filter books by learning path
-        const pathBooks = this.books.filter(book => book.path === pathName);
-        this.renderBooks(pathBooks);
-    }
-
-    // Scroll to section
-    scrollToSection(sectionId) {
-        const element = document.getElementById(sectionId);
-        if (element) {
-            const headerHeight = 80;
-            const elementPosition = element.offsetTop - headerHeight;
-            window.scrollTo({
-                top: elementPosition,
-                behavior: 'smooth'
-            });
+    // Animations and UI
+    initializeAnimations() {
+        // Animate hero stats
+        this.animateCounters();
+        
+        // Initialize theme
+        const savedTheme = localStorage.getItem('aiHub_theme') || 'light';
+        document.body.setAttribute('data-theme', savedTheme);
+        
+        const themeIcon = document.querySelector('#themeToggle i');
+        if (themeIcon) {
+            themeIcon.className = savedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
         }
     }
 
-    // Load user data from localStorage
-    loadUserData() {
-        const savedNotes = localStorage.getItem('aiLearningHub_notes');
-        if (savedNotes) {
-            this.notes = JSON.parse(savedNotes);
-            this.renderNotesList();
-        }
-
-        // Load any other user data here
-        this.updateProgressDisplay();
-    }
-
-    // Save notes to localStorage
-    saveNotesToStorage() {
-        localStorage.setItem('aiLearningHub_notes', JSON.stringify(this.notes));
-    }
-
-    // Animate elements on load
-    animateOnLoad() {
-        const animatedElements = document.querySelectorAll('.fade-in, .slide-up');
-        animatedElements.forEach((element, index) => {
-            setTimeout(() => {
-                element.style.opacity = '1';
-                element.style.transform = 'translateY(0)';
-            }, index * 100);
+    animateCounters() {
+        const counters = document.querySelectorAll('[data-count]');
+        counters.forEach(counter => {
+            const target = parseInt(counter.dataset.count);
+            const duration = 2000;
+            const step = target / (duration / 16);
+            let current = 0;
+            
+            const timer = setInterval(() => {
+                current += step;
+                if (current >= target) {
+                    counter.textContent = target;
+                    clearInterval(timer);
+                } else {
+                    counter.textContent = Math.floor(current);
+                }
+            }, 16);
         });
+    }
+
+    setupScrollAnimations() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fade-in-up');
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        // Observe elements that should animate on scroll
+        document.querySelectorAll('.book-card, .analytics-card, .resource-card').forEach(el => {
+            observer.observe(el);
+        });
+    }
+
+    showToast(message, type = 'info') {
+        const toast = document.getElementById('toast');
+        if (!toast) return;
+        
+        const icon = toast.querySelector('.toast-icon');
+        const messageEl = toast.querySelector('.toast-message');
+        
+        // Set icon based on type
+        const icons = {
+            success: 'fas fa-check-circle',
+            error: 'fas fa-exclamation-circle',
+            info: 'fas fa-info-circle'
+        };
+        
+        icon.className = `toast-icon ${icons[type]}`;
+        messageEl.textContent = message;
+        toast.className = `toast ${type} show`;
+        
+        setTimeout(() => {
+            toast.classList.remove('show');
+        }, 3000);
+    }
+
+    saveData() {
+        localStorage.setItem('aiHub_todos', JSON.stringify(this.todos));
+        localStorage.setItem('aiHub_bookProgress', JSON.stringify(this.bookProgress));
+        localStorage.setItem('aiHub_userStats', JSON.stringify(this.userStats));
+    }
+}
+
+// Global functions for onclick handlers
+function scrollToSection(sectionId) {
+    const element = document.getElementById(sectionId);
+    if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+}
+
+function showComingSoon() {
+    if (window.aiHub) {
+        window.aiHub.showToast('Coming soon! Stay tuned for updates.', 'info');
     }
 }
 
 // Initialize the application
-const aiHub = new AILearningHub();
+document.addEventListener('DOMContentLoaded', () => {
+    window.aiHub = new AILearningHub();
+});
 
-// Make functions globally available for HTML onclick handlers
-window.aiHub = aiHub;
+// Service Worker for offline functionality (optional)
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+            .then(registration => console.log('SW registered'))
+            .catch(error => console.log('SW registration failed'));
+    });
+}
